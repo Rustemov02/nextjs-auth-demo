@@ -1,9 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  PayloadAction,
-  createNextState,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   user: string | null;
@@ -15,7 +10,9 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: JSON.parse(localStorage.getItem("authState") || "null")?.username,
-  accessToken: JSON.parse(localStorage.getItem('authState') || "null")?.accessToken || null,
+  accessToken:
+    JSON.parse(localStorage.getItem("authState") || "null")?.accessToken ||
+    null,
   loading: false,
   isAuthenticated: false,
   error: null,
@@ -23,10 +20,7 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (
-    userData: {  password: string},
-    { rejectWithValue }
-  ) => {
+  async (userData: { password: string }, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `https://679b27d533d316846322e42b.mockapi.io/api/auth/userInfo?password=${userData.password}`
@@ -47,12 +41,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout : state => {
+    logout: (state) => {
       state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
-      localStorage.removeItem("authState") //remove local data
-    }
+      localStorage.removeItem("authState"); //remove local data
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -82,5 +76,5 @@ const authSlice = createSlice({
   },
 });
 
-export const {logout} = authSlice.actions
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
