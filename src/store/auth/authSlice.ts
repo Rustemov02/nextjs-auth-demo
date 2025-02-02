@@ -1,48 +1,42 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { error } from "console";
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  createNextState,
+} from "@reduxjs/toolkit";
 
 interface AuthState {
-  user : string | null;
-  accessToken : string | null;
-  isAuthenticated : boolean;
-  loading : boolean;
-  error : string | null;
+  user: string | null;
+  accessToken: string | null;
+  isAuthenticated: boolean;
+  loading: boolean;
+  error: string | null;
 }
 
-const initialState : AuthState = {
-  user : null,
-  accessToken : null,
-  loading : false,
-  isAuthenticated : false,
-  error : null,
-}
+const initialState: AuthState = {
+  user: JSON.parse(localStorage.getItem("authState") || "null")?.username,
+  accessToken: JSON.parse(localStorage.getItem('authState') || "null")?.accessToken || null,
+  loading: false,
+  isAuthenticated: false,
+  error: null,
+};
 
 export const login = createAsyncThunk(
   "auth/login",
   async (
-    userData: { email: string; password: string },
+    userData: {  password: string},
     { rejectWithValue }
   ) => {
     try {
-      // const response = await fetch(
-      //   "https://679b27d533d316846322e42b.mockapi.io/api/auth/userInfo",
-      //   {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify(userData),
-      //   }
-      // );
+      const response = await fetch(
+        `https://679b27d533d316846322e42b.mockapi.io/api/auth/userInfo?password=${userData.password}`
+      );
 
-      const response = await fetch(`https://679b27d533d316846322e42b.mockapi.io/api/auth/userInfo?email=${userData.email}`)
       if (!response.ok) throw new Error("Login Failed");
-      const user = await response.json()
-      if(user.length >= 0 && user[0].password === userData.password){
-        console.log('logined !')
-      }else{
-        console.log('wrong password !')
-      } 
+
       const data = await response.json();
-      return {user : data.user , accessToken : data.accessToken} 
+
+      return { user: data[0].username, accessToken: data[0].accessToken };
     } catch (error: any) {
       return rejectWithValue(error.message || "Login error");
     }
@@ -53,12 +47,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
+    logout : state => {
       state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
-      localStorage.removeItem("authState"); //remove the token
-    },
+      localStorage.removeItem("authState") //remove local data
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -72,6 +66,8 @@ const authSlice = createSlice({
           state,
           action: PayloadAction<{ user: string; accessToken: string }>
         ) => {
+          console.log("fullfilled worked !");
+          console.log(action.payload);
           state.loading = false;
           state.user = action.payload.user;
           state.accessToken = action.payload.accessToken;
@@ -87,4 +83,4 @@ const authSlice = createSlice({
 });
 
 export const {logout} = authSlice.actions
-export default authSlice.reducer
+export default authSlice.reducer;
