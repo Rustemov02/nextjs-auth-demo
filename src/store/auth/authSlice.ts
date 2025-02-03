@@ -1,22 +1,26 @@
+"use client"
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { useRouter } from "next/navigation";
 
 interface AuthState {
-  user: string | null;
+  username: string | null;
   accessToken: string | null;
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
+  email : string | null
 }
 
 const initialState: AuthState = {
-  user: JSON.parse(localStorage.getItem("authState") || "null")?.username,
+  username: JSON.parse(localStorage.getItem("authState") || "null")?.username || "",
   accessToken:
     JSON.parse(localStorage.getItem("authState") || "null")?.accessToken ||
     null,
   loading: false,
+  email : null,
   isAuthenticated: false,
   error: null,
-};
+}; 
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -42,7 +46,7 @@ export const register = createAsyncThunk(
       if (!response.ok) throw new Error("Registration Failed !");
 
       const data = await response.json();
-      return {username : data.username , email : data.email , password : data.password , accessToken : data.accessToken}
+      return {username : data.username , email : data.email , password : data.password , accessToken : data.accessToken , isAuthenticated : true}
     } catch (error: any) {
       return rejectWithValue(error.message || "Registration error...");
     }
@@ -51,7 +55,7 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (userData: { password: string }, { rejectWithValue }) => {
+  async (userData: {email : string, password: string }, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `https://679b27d533d316846322e42b.mockapi.io/api/auth/userInfo?password=${userData.password}`
@@ -61,7 +65,7 @@ export const login = createAsyncThunk(
 
       const data = await response.json();
 
-      return { user: data[0].username, accessToken: data[0].accessToken };
+      return { email: data[0].email, accessToken: data[0].accessToken , isAuthenticated : true };
     } catch (error: any) {
       return rejectWithValue(error.message || "Login error");
     }
@@ -74,7 +78,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       console.log("logout...");
-      state.user = null;
+      state.username = null;
       state.accessToken = null;
       state.isAuthenticated = false;
       localStorage.removeItem("authState"); //remove local data
@@ -91,12 +95,12 @@ const authSlice = createSlice({
         login.fulfilled,
         (
           state,
-          action: PayloadAction<{ user: string; accessToken: string }>
+          action: PayloadAction<{ email: string; accessToken: string }>
         ) => {
           console.log("fullfilled worked !");
           console.log(action.payload);
           state.loading = false;
-          state.user = action.payload.user;
+          state.email = action.payload.email;
           state.accessToken = action.payload.accessToken;
           state.isAuthenticated = true;
           localStorage.setItem("authState", JSON.stringify(action.payload)); //set the token to local
@@ -104,8 +108,7 @@ const authSlice = createSlice({
       )
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
-        console.log("Hatali girish");
+        state.error = action.payload as string; 
       })
 
       // Register thunk
@@ -127,12 +130,16 @@ const authSlice = createSlice({
           console.log(action.payload)
           const data = action.payload
           state.loading = false;
-          state.user = data.username
+          state.username = data.username
           state.accessToken = data.accessToken
           state.isAuthenticated = true
           localStorage.setItem("authState" , JSON.stringify(data))
         }
-      );
+      )
+      .addCase(register.rejected , (state,action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
   },
 });
 

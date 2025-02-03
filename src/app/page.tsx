@@ -1,31 +1,30 @@
 "use client";
-import { login, logout , register } from "@/store/auth/authSlice";
-import { AppDispatch } from "@/store/store"; 
+import { logout } from "@/store/auth/authSlice";
+import { AppDispatch } from "@/store/store";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { useDispatch } from "react-redux";
 
-export default function Home() {
+const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const email = "testingEmail";
-  const password = "crxxgJquHsTI7M0";
-  const username = 'Mandy67'
-
-  const handleLogin = async () => {
-    await dispatch(login({ password })).unwrap();
+  const router = useRouter
+  ()
+  const handleLogout = () => {
+    try{
+      dispatch(logout());
+      router.push("/login")
+    }catch(error){
+      console.log("error : " , error)
+    }
   };
 
-  const handleLogout = async() => {
-    await dispatch(logout())
-  }
-  
-  const handleRegister = async () => {
-    await dispatch(register({username , password , email})).unwrap()
-  }
+  return ( 
+    <div className="flex flex-col items-center justify-center gap-10">
+      <p className="border-2 text-3xl"> Welcome to my webSite :)</p>
 
-  return (
-    <div className="flex flex-col">
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={handleLogout}>Log Out</button>
-      <button onClick={handleRegister}>Register</button>
+      <button className="py-3 px-5 border-2 border-green-400 pointer rounded-lg" onClick={handleLogout}>Log Out</button>
     </div>
   );
-}
+};
+
+export default Home;
