@@ -25,7 +25,7 @@ const initialState: AuthState = {
 export const register = createAsyncThunk(
   "auth/register",
   async (
-    userData: { email: string; password: string; username: string },
+    userData: { email: string; password: string; username: string },  
     { rejectWithValue }
   ) => {
     try {
@@ -57,15 +57,31 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userData: {email : string, password: string }, { rejectWithValue }) => {
     try {
+  
       const response = await fetch(
-        `https://679b27d533d316846322e42b.mockapi.io/api/auth/userInfo?password=${userData.password}`
+        "https://679b27d533d316846322e42b.mockapi.io/api/auth/userInfo",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(userData)
+        }
       );
+ 
+      // const response = await fetch(`https://localhost:7260/auth/login`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(userData),
+      // });
 
       if (!response.ok) throw new Error("Login Failed");
 
       const data = await response.json();
 
-      return { email: data[0].email, accessToken: data[0].accessToken , isAuthenticated : true };
+      return { email: data.email, accessToken: data.accessToken , isAuthenticated : true };
     } catch (error: any) {
       return rejectWithValue(error.message || "Login error");
     }

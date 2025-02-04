@@ -1,15 +1,16 @@
 "use client";
-import { login, logout, register } from "@/store/auth/authSlice";
+import { login } from "@/store/auth/authSlice";
 import { AppDispatch } from "@/store/store";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import Register from "./register";
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [loginData, setLoginData] = useState([
-    { email: "Sheldon4@yahoo.com", password: "crxxgJquHsTI7M0" },
+    { email: "", password: "" },
   ]);
 
   const handleFillLoginData = (text: string, field: string) => {
@@ -27,7 +28,7 @@ export default function Home() {
     } catch (error) {
       console.log("Login Error : ", error);
     }
-  };
+  }; 
 
   return (
     <div className="flex flex-col items-center justify-center gap-5">
@@ -52,13 +53,12 @@ export default function Home() {
       </div>
 
       <button
-        onClick={() => {
-          console.log(loginData);
+        onClick={() => { 
           handleLogin();
         }}
       >
         Login
-      </button>
+      </button> 
     </div>
   );
 }
