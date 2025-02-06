@@ -10,7 +10,7 @@ export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [loginData, setLoginData] = useState([
-    { email: "info@atiahi.org", password: "ATIAHI+2025!@" },
+    { email: "", password: "" },
   ]);
 
   const handleFillLoginData = (text: string, field: string) => {
