@@ -1,5 +1,5 @@
 "use client";
-import { login } from "@/store/auth/authSlice";
+import { login } from "@/store/auth/authSlice"; 
 import { AppDispatch } from "@/store/store";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [loginData, setLoginData] = useState([
-    { email: "", password: "" },
+    { email: "info@atiahi.org", password: "ATIAHI+2025!@" },
   ]);
 
   const handleFillLoginData = (text: string, field: string) => {

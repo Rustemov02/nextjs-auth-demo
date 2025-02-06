@@ -1,0 +1,15 @@
+my-auth-project/
+├── public/                 # Statik fayllar
+├── src/                    
+│   ├── app/                # Next.js App Router ilə səhifələr
+│   │   ├── page.tsx        # Anasəhifə
+│   │   └── login/          # Login səhifəsi
+│   ├── components/         # Yenidən istifadə edilən komponentlər
+│   ├── store/              # Redux store
+│   ├── styles/             # CSS/SASS
+│   └── utils/              # Yardımçı funksiyalar
+├── .gitignore              # Git ignore faylı
+├── next.config.js          # Next.js konfiqurasiya faylı
+├── package.json            # Layihə asılılıqları
+├── tsconfig.json           # TypeScript konfiqurasiya faylı
+└── yarn.lock / package-lock.json
