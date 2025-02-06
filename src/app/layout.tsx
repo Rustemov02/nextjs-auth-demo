@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 
@@ -11,10 +11,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter()
-  useEffect(()=>{
-    if(localStorage.getItem("isAuth")) router.push('/')
-  },[])
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem("isAuth")) router.push("/auth");
+  }, []);
   return (
     <html lang="en">
       <Provider store={store}>

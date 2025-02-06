@@ -1,35 +1,9 @@
 "use client";
-import { login } from "@/store/auth/authSlice"; 
-import { AppDispatch } from "@/store/store";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
-import Register from "./register";
+import { FC } from "react";
 
-export default function Home() {
-  const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
-  const [loginData, setLoginData] = useState([
-    { email: "", password: "" },
-  ]);
-
-  const handleFillLoginData = (text: string, field: string) => {
-    setLoginData([{ ...loginData[0], [field]: text }]);
-  };
-
-  const handleLogin = async () => {
-    try {
-      const userData = {
-        email: loginData[0].email,
-        password: loginData[0].password,
-      };
-      const result = await dispatch(login(userData)).unwrap();
-      if (result) router.push("/");
-    } catch (error) {
-      console.log("Login Error : ", error);
-    }
-  }; 
-
+const LoginForm: FC<{ fillLogin: (e: any, text: string) => void }> = ({
+  fillLogin,
+}) => {
   return (
     <div className="flex flex-col items-center justify-center gap-5">
       <div className="flex flex-col items-start gap-1">
@@ -38,7 +12,7 @@ export default function Home() {
           type="email"
           placeholder="Email"
           className="border-2 w-fit p-3 rounded-lg"
-          onChange={(e) => handleFillLoginData(e.target.value, "email")}
+          onChange={(e) => fillLogin(e.target.value, "email")}
         />
       </div>
 
@@ -48,17 +22,11 @@ export default function Home() {
           type="password"
           placeholder="Password"
           className="border-2 w-fit p-3 rounded-lg"
-          onChange={(e) => handleFillLoginData(e.target.value, "password")}
+          onChange={(e) => fillLogin(e.target.value, "password")}
         />
       </div>
-
-      <button
-        onClick={() => { 
-          handleLogin();
-        }}
-      >
-        Login
-      </button> 
     </div>
   );
-}
+};
+
+export default LoginForm;
