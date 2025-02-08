@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -9,9 +9,7 @@ import LoginForm from "./login";
 const AuthPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const [loginData, setLoginData] = useState([
-    { email: "info@atiahi.org", password: "ATIAHI+2025!@" },
-  ]);
+  const [loginData, setLoginData] = useState([{ USERNAME: "", PASSWORD: "" }]);
 
   const handleFillLoginData = (text: string, field: string) => {
     setLoginData([{ ...loginData[0], [field]: text }]);
@@ -20,8 +18,8 @@ const AuthPage = () => {
   const handleLogin = async () => {
     try {
       const userData = {
-        email: loginData[0].email,
-        password: loginData[0].password,
+        email: loginData[0].USERNAME,
+        password: loginData[0].PASSWORD,
       };
       const result = await dispatch(login(userData)).unwrap();
       if (result) router.push("/");
@@ -31,9 +29,10 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen bg-[#264ECA]">
-      <LoginForm fillLogin={handleFillLoginData}/>
+    <div className="flex flex-col items-center justify-center h-screen bg-[#264ECA]">
+      <LoginForm fillLogin={handleFillLoginData} />
       <button
+        className="bg-[#566aa0] text-white px-4 py-2 rounded-lg"
         onClick={() => {
           handleLogin();
         }}
