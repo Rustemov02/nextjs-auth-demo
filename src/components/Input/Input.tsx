@@ -20,7 +20,7 @@ const Input: FC<{
         return 'text';
     }
   return (
-    <div className="max-w-full">
+    <div className="">
       <p className="text-[white] text-base py-1 font-light font-montserrat ">
         {label}
       </p>

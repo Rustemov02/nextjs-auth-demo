@@ -65,8 +65,7 @@ export const login = createAsyncThunk(
     if (typeof window === "undefined") {
       return rejectWithValue("This action is only available on the client.");
     }
-    const testData = JSON.stringify(userData);
-    console.log(testData);
+    const testData = JSON.stringify(userData); 
     try {
       const response = await fetch(`https://localhost:7260/api/auth/login`, {
         method: "POST",
@@ -111,8 +110,7 @@ const authSlice = createSlice({
         (
           state,
           action: PayloadAction<{ userId: string; accessToken: string }>
-        ) => {
-          console.log("fullfilled worked !");
+        ) => { 
           console.log(action.payload);
           state.loading = false;
           state.userId = action.payload.userId;
@@ -125,7 +123,7 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.log("Hatali girish");
+        // console.log("Hatali girish");
       })
 
       // Register thunk
