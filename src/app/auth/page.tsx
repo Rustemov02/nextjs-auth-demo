@@ -76,7 +76,8 @@ const AuthPage = () => {
         <div>
           <BasketIcon size={200} />
         </div>
-        <div className="flex flex-col items-center justify-center gap-5">
+        <div className="flex flex-col items-center justify-center gap-5"> 
+           
           <LoginForm fillLogin={handleFillLoginData} errData={errData} />
 
           <Button

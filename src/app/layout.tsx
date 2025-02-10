@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem("isAuth")) router.push("/auth");
+    // if (!localStorage.getItem("isAuth")) router.push("/auth");
   }, []);
   return (
     <html lang="en">
