@@ -6,12 +6,11 @@ import { useDispatch } from "react-redux";
 import styles from "./page.module.css";
 import cup from "@/assets/images/cup.jpg";
 import cup2 from "@/assets/images/cup2.jpg";
-import Image from "next/image";
+import Image from "next/image"; 
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
-
+  const router = useRouter(); 
   const handleLogout = () => {
     dispatch(logout());
     router.push("/auth");
@@ -22,7 +21,7 @@ export default function Home() {
       {/* <button onClick={handleLogout}>Log out</button> */}
 
       <div className={styles.content_box}>
-        <div className={`${styles.main_content} font-montserrat`}>
+        <div className={`${styles.main_content} font-montserrat`}> 
           <h1>Your coffee</h1>
           <h1>Your vibe</h1>
           <h1>Your energy</h1>
