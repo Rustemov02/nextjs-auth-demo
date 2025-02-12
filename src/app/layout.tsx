@@ -1,32 +1,20 @@
-"use client";
-import { Provider } from "react-redux";
-import { store } from "@/store/store";
-import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
+import { ClientProvider } from "./ClientProvider"; // Yeni client componenti içe aktarın
 import "./globals.css";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; 
 
-export default function RootLayout({
-  children
-}: Readonly<{ children: React.ReactNode}>) {
-  const router = useRouter();
-  const [messages , setMessages] = useState(null);
-  const [locale, setLocale] = useState("az"); 
-  useEffect(() => {
-    // if (!localStorage.getItem("isAuth")) router.push("/auth");
-  }, []);
- 
-  useEffect(()=>{
-    const currentLocale = router.locale || "az";  
-    
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const locale = await getLocale();
+  const messages = await getMessages();
 
-  },[])
- 
   return (
-    <html lang='en'> 
-        <Provider store={store}>
-          <body>{children}</body>
-        </Provider> 
+    <html lang={locale}>
+      <body>
+        <ClientProvider messages={messages} locale={locale}>{children}</ClientProvider>
+      </body>
     </html>
   );
 }
