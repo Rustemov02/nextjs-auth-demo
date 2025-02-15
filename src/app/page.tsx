@@ -6,33 +6,35 @@ import { useDispatch } from "react-redux";
 import styles from "./page.module.css";
 import cup from "@/assets/images/cup.jpg";
 import cup2 from "@/assets/images/cup2.jpg";
-import Image from "next/image";  
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { useState } from "react";
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter(); 
+  const router = useRouter();
+
   const handleLogout = () => {
     dispatch(logout());
     router.push("/auth");
   };
- 
-  const t = useTranslations()
-  const currentLocale = useLocale()
-  
-  const changeLanguage = (locale : string) => {
-    if(locale !== currentLocale){
-      setRequestLocale(locale)
-    }
-  }
+
+  const t = useTranslations();
+  const currentLocale = useLocale();
+
+  const [locale, setLocale] = useState(currentLocale);
+
+  const changeLanguage = (newLocale: string) => {
+     
+  };
   return (
     <div className={styles.container}>
-      {/* <button onClick={handleLogout}>Log out</button> */} 
+      {/* <button onClick={handleLogout}>Log out</button> */}
       <div className={styles.content_box}>
-        <p>{t("welcome")}</p>
-        <button onClick={()=>changeLanguage('en')}>Change language</button>
-        <div className={`${styles.main_content} font-montserrat`}> 
+        <p>{t("description")}</p>
+        <button onClick={() => changeLanguage("en")}>Change language</button>
+        <div className={`${styles.main_content} font-montserrat`}>
           <h1>Your coffee</h1>
           <h1>Your vibe</h1>
           <h1>Your energy</h1>

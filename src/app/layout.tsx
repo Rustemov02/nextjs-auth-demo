@@ -1,5 +1,5 @@
 import { getLocale, getMessages } from "next-intl/server";
-import { ClientProvider } from "./ClientProvider"; // Yeni client componenti içe aktarın
+import { ClientProvider } from "./ClientProvider"; 
 import "./globals.css";
 
 export default async function RootLayout({

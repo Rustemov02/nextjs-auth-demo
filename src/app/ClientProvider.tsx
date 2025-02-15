@@ -13,6 +13,8 @@ export function ClientProvider({
   messages: any;
   locale : string;
 }) {
+
+  console.log(locale , messages)
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <Provider store={store}>{children}</Provider>
