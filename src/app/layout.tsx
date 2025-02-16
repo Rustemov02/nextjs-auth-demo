@@ -1,6 +1,6 @@
-import { IntlProvider } from "next-intl";
-import { cookies } from "next/headers";
-
+'use client'
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 import "./globals.css";
 
 interface RootLayoutProps {
@@ -8,22 +8,12 @@ interface RootLayoutProps {
   messages: Record<string, string>;
 }
 
-export default async function RootLayout({
-  children,
-  messages,
-}: RootLayoutProps) {
-  const cookieStore = await cookies();  
-  const locale = cookieStore.get("locale")?.value || "az";
-
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang={locale}>
-      <body>
-        {children && (
-          <IntlProvider locale={locale} messages={messages}>
-            {children}
-          </IntlProvider>
-        )}
-      </body>
+    <html lang="az">
+      <Provider store={store}>
+        <body>{children}</body>
+      </Provider>
     </html>
   );
 }

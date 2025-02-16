@@ -1,11 +1,14 @@
 import createNextIntlPlugin from "next-intl/plugin";
-
-const withNextIntl = createNextIntlPlugin();
+ 
 
 /** @type {import('next').NextConfig} */
+ 
+  
+const nextTranslate = require('next-translate');
+module.exports = nextTranslate({
+    reacctStrictMode : true
+})
+module.exports = {
+        reactStrictMode : true
+}
 
-const nextConfig = {
-     
-};
-
-module.exports = withNextIntl(nextConfig);

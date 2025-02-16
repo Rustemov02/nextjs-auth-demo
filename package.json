@@ -11,8 +11,10 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
     "i18next": "^24.2.2",
+    "i18next-browser-languagedetector": "^8.0.3",
     "next": "^15.1.6",
     "next-intl": "^3.26.3",
+    "next-translate": "^2.6.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.0",

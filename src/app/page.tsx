@@ -7,6 +7,7 @@ import styles from "./page.module.css";
 import cup from "@/assets/images/cup.jpg";
 import cup2 from "@/assets/images/cup2.jpg";
 import Image from "next/image";  
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,10 +18,11 @@ export default function Home() {
     router.push("/auth");
   };
  
- 
+  const {t , i18n} = useTranslation()  
   return (
     <div className={styles.container}>
       {/* <button onClick={handleLogout}>Log out</button> */}
+      <p>{t("welcome")}</p>
       <div className={styles.content_box}>  
         <div className={`${styles.main_content} font-montserrat`}>
           <h1>Your coffee</h1>
