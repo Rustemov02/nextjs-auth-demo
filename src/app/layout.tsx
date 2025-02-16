@@ -1,19 +1,28 @@
-import { getLocale, getMessages } from "next-intl/server";
-import { ClientProvider } from "./ClientProvider"; 
+import { IntlProvider } from "next-intl";
+import { cookies } from "next/headers";
+
 import "./globals.css";
+
+interface RootLayoutProps {
+  children: React.ReactNode;
+  messages: Record<string, string>;
+}
 
 export default async function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
-  const locale = await getLocale();
-  const messages = await getMessages();
+  messages,
+}: RootLayoutProps) {
+  const cookieStore = await cookies();  
+  const locale = cookieStore.get("locale")?.value || "az";
 
   return (
     <html lang={locale}>
       <body>
-        <ClientProvider messages={messages} locale={locale}>{children}</ClientProvider>
+        {children && (
+          <IntlProvider locale={locale} messages={messages}>
+            {children}
+          </IntlProvider>
+        )}
       </body>
     </html>
   );

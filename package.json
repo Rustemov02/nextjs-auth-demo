@@ -10,18 +10,22 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
+    "i18next": "^24.2.2",
     "next": "^15.1.6",
     "next-intl": "^3.26.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.0",
     "react-redux": "^9.2.0",
     "swiper": "^11.2.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/i18next": "^13.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-i18next": "^8.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
