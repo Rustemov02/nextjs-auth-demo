@@ -1,14 +1,8 @@
-import createNextIntlPlugin from "next-intl/plugin";
- 
-
-/** @type {import('next').NextConfig} */
- 
+const nextConfig = {
+    reactStrictMode: true,
+    swcMinify: true,
+    i18n: require('./next-i18next.config').i18n, 
+  };
   
-const nextTranslate = require('next-translate');
-module.exports = nextTranslate({
-    reacctStrictMode : true
-})
-module.exports = {
-        reactStrictMode : true
-}
-
+  module.exports = nextConfig;
+  

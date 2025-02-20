@@ -1,22 +1,11 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
+// import { getUserLocale } from "../../libs/locale";
+import { getRequestConfig } from "next-intl/server";
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    fallbackLng: "az",
-    debug: true,
-    interpolation: {
-      escapeValue: false,
-    },
-    resources: {
-      az: { translation: require("../messages/az.json") },
-      en: { translation: require("../messages/en.json") },
-      ru: { translation: require("../messages/ru.json") },
-    },
-  });
+export default getRequestConfig(async () => {
+  const locale = "az";
 
-
-  export default i18n;
+  return {
+    locale,
+    messages: (await import(`@/messages/${locale}.json`)).default,
+  };
+});

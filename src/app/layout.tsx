@@ -1,19 +1,19 @@
-'use client'
+"use client";
+
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
+import { store } from "@/store/store"; // Redux store-unuzu import edin 
 import "./globals.css";
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  messages: Record<string, string>;
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
-  return (
-    <html lang="az">
+export default function RootLayout({ children }: RootLayoutProps) {
+  return ( 
       <Provider store={store}>
-        <body>{children}</body>
-      </Provider>
-    </html>
+        <html lang="az">
+          <body>{children}</body>
+        </html>
+      </Provider> 
   );
 }
